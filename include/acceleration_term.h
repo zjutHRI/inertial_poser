@@ -8,6 +8,7 @@
 
 using namespace ceres;
 
+// 欧拉角转旋转矩阵
 template <typename T>
 void EulerAnglesToRotationMatrixZXY(const T* euler, const int row_stride, T* R);
 
