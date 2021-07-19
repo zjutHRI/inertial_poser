@@ -1,7 +1,7 @@
 # Single-human 6D pose estimation based on fusion of IMU and multi-view images
 
-The context of our framework:
- # 1. Human upper body model
+# The context of our framework:
+ ## 1. Human upper body model
  
  人体上肢运动学模型为包含 10 个连杆的运动系统, 其中根连杆 h0（髋部）为人体基坐标系, 包含相对世界坐标系表示的姿态 R 和位移 t , 其余子连杆hj, j ∈ {1,2, · · · , 9}通过球形关节与父连杆连接, 相对于父连杆有旋转R和常量连杆位移 t. 在考虑人体基坐标系姿态 R 和位移 t的情况下,人体上肢可以看作一个具有 33 个自由度的运动系
 统, 构造向量 θh =[(t_g^h0), 0_T h0, θ_T^h1· · · θ_T^h9]^T 以表示人体上肢模型的姿态信息.
@@ -11,7 +11,7 @@ The context of our framework:
 ![image](https://user-images.githubusercontent.com/52600391/126116124-7167d3e3-5b78-4a1c-9c63-8892489ee3cb.png)
 
 
-  #2. Cost function
+  ## 2. Cost function
 
 人体动作估计需要融合视觉和 IMU 传感器的数据, 对 θh 进行求解. 建立关于 θh 的目标函数
 
@@ -25,7 +25,7 @@ E (θh) = αRER (θh)+αPEP (θh)+αLEL (θh) (5)
    Position error:
     首先, 多台相机捕捉到的画面内容通过 2D 姿态求解器以获得操作人员在图像坐标系下的肢体关键点位置. 各个 2D 关键点坐标 t∈ R2 有对应的关键点置信度 λ∈ [0,1], 表示该关键点被正确识别的概率. 为了方便表示, 人体上肢模型中的各连杆坐标系与对应的 2D 关键点都记作 hj . 虚拟空间中 hj 的空间位置估计值 ˆt∈ R3 由的位移部分计算得出. 为了比较估计值 ˆt与姿态求解器输出的 2D 关键点 t的偏差, 将 ˆt投影至相机的图像坐标系下;
 
-  #3. Optimization
+  ## 3. Optimization
   
   通过对人体姿态数据集的分析, 能够得到各人体关节角 θhj 的上下限 θmin和 θmax. 人体姿态求解的优化问题定义如下:
   
