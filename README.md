@@ -2,8 +2,8 @@
 
 The context of our framework:
   1. Human upper body model
-  2. 
-  Human upper model includes 10 joint-links. Root joint <img src="http://chart.googleapis.com/chart?cht=tx&chl= h_0" style="border:none;"> (hip) is regraded as human base coordinate, which represented in the global coordinate. The root joint is represented by the rotation matrix <img src="http://chart.googleapis.com/chart?cht=tx&chl= R_{h_0}^g" style="border:none;"> and translation offest vector <img src="http://chart.googleapis.com/chart?cht=tx&chl= t_{h_0}^g" style="border:none;"> , the other joints are represented w.r.t the root joint by the rotation and translation.
+ 
+  Human upper model includes 10 joint-links. Root joint <img src="http://chart.googleapis.com/chart?cht=tx&chl= h_0" style="border:none;"> (hip) is regraded as human base coordinate, which is represented by the rotation matrix <img src="http://chart.googleapis.com/chart?cht=tx&chl= R_{h_0}^g" style="border:none;"> and translation offest vector <img src="http://chart.googleapis.com/chart?cht=tx&chl= t_{h_0}^g" style="border:none;"> in the global coordinate, the other joints are represented w.r.t the root joint by the rotation and translation.
   ![Uploading image.png…]()
 
   2. Cost function
