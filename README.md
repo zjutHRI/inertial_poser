@@ -12,6 +12,10 @@ The context of our framework:
 
   2. Cost function
 
+    IMU error
+    
+    Position error
+
   3. Optimization
 
 
