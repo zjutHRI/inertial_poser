@@ -34,7 +34,7 @@ class Imu_Term {
     private:
         const Eigen::Matrix<double, 3, 3> _rArm_imu_ori;
         const Eigen::Matrix<double, 3, 1> _rArm_imu_acc;
-        const Eigen::Matrix<double, 3, 3> _rArm_offset;
+        const Eigen::Matrix<double, 3, 3> _rArm_offset;     //肢体连杆坐标系h_j与IMU传感器坐标系I_j拥有固定的旋转偏移 R_{I_j}^{h_j}，
 
         const Eigen::Matrix<double, 3, 3> _lArm_imu_ori;
         const Eigen::Matrix<double, 3, 1> _lArm_imu_acc;
