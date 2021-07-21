@@ -129,7 +129,10 @@ class Imu_Term {
             // 当前时刻的肢体加速度是无法通过推导得出的，只能通过记录前2个时刻的肢体位置来计算上一时刻的肢体加速度
             // ite_trans 为当前加速第测量值
             solved_acc = (ite_trans - (T)2 * _previous_hips_position[1].cast<T>()  + _previous_hips_position[0].cast<T>()) / (T)period;
+            // 加速度误差项为：推导值-测量值 的范数
             acc_diff = solved_acc - _hip_imu_acc.cast<T>();
+            
+            //髋关节加速度误差项
             cost_imu[5] = (acc_diff(0,0) * acc_diff(0,0) +
                           acc_diff(1,0) * acc_diff(1,0) +
                           acc_diff(2,0) * acc_diff(2,0)) * (T)acc_weight;
@@ -139,6 +142,7 @@ class Imu_Term {
             // 将欧拉角转为旋转矩阵
             EulerAnglesToRotationMatrixZXY(hip_joint, 3, rot);
             // Eigen::Map 的作用？
+            // Map就是将原始“连续内存存储”的数据，以矩阵形式重新组织。
             Eigen::Map<const Eigen::Matrix<T, 3, 3, Eigen::RowMajor> > ori(rot);
             
             // 迭代的旋转信息和位移信息
