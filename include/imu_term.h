@@ -18,16 +18,16 @@ using std::queue;
 
 /*********************************************/
 //cost_imu contains 10 residuals
-//0: hips_ori
-//1: rArm_ori
-//2: rHand_ori
-//3: lArm_ori
-//4: lHand_ori
-//5: hips_acc
-//6: rArm_acc
-//7: rHand_acc
-//8: lArm_acc
-//9: lHand_acc
+//0: hips_ori   //髋关节旋转
+//1: rArm_ori   //右臂旋转
+//2: rHand_ori  //右手旋转
+//3: lArm_ori  //左臂旋转
+//4: lHand_ori  //左手旋转
+//5: hips_acc  //髋关节加速度
+//6: rArm_acc  //右臂加速度
+//7: rHand_acc  //右手加速度
+//8: lArm_acc  //左臂加速度
+//9: lHand_acc  //左手加速度
 /*********************************************/
 
 class Imu_Term {
@@ -125,7 +125,9 @@ class Imu_Term {
             //Eigen::MatrixXd pos = ite_trans.cast<double>();
 
             //acc_term_hips
-
+            
+            // 当前时刻的肢体加速度是无法通过推导得出的，只能通过记录前2个时刻的肢体位置来计算上一时刻的肢体加速度
+            // ite_trans 为当前加速第测量值
             solved_acc = (ite_trans - (T)2 * _previous_hips_position[1].cast<T>()  + _previous_hips_position[0].cast<T>()) / (T)period;
             acc_diff = solved_acc - _hip_imu_acc.cast<T>();
             cost_imu[5] = (acc_diff(0,0) * acc_diff(0,0) +
@@ -133,13 +135,16 @@ class Imu_Term {
                           acc_diff(2,0) * acc_diff(2,0)) * (T)acc_weight;
 
             //cost_ori[0] = (T)0;
-
+            
+            // 将欧拉角转为旋转矩阵
             EulerAnglesToRotationMatrixZXY(hip_joint, 3, rot);
+            // Eigen::Map 的作用？
             Eigen::Map<const Eigen::Matrix<T, 3, 3, Eigen::RowMajor> > ori(rot);
-
+            
+            // 迭代的旋转信息和位移信息
             ite_ori = _world_to_ref.cast<T>() * ori;
-
             ite_trans += ite_ori * _bone_length[0].cast<T>();
+            
 
             //hip_ori = ite_ori;
 
@@ -173,7 +178,7 @@ class Imu_Term {
                 ite_trans += ite_ori * _bone_length[4].cast<T>();
             }
 
-
+            // for right hand
             for(int i = 0; i < 2; ++i)
             {
                 EulerAnglesToRotationMatrixZXY(rArm_joint + i * 3, 3, rot);
@@ -250,7 +255,7 @@ class Imu_Term {
             cost_imu[8] = (acc_diff(0,0) * acc_diff(0,0) +
                           acc_diff(1,0) * acc_diff(1,0) +
                           acc_diff(2,0) * acc_diff(2,0)) * (T)acc_weight;
-            //lArm_oricost
+            //lArm_ori cost
             q_res = (ite_ori * _lArm_offset.cast<T>()).inverse() * _lArm_imu_ori.cast<T>();
             q_res.normalize();
             cost_imu[3] = q_res.x() * q_res.x()
