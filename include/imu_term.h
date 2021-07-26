@@ -154,6 +154,7 @@ class Imu_Term {
 
             q_res = (ite_ori * _hip_offset.cast<T>()).inverse() * _hip_imu_ori.cast<T>();
             q_res.normalize();
+            // 髋关节旋转
             cost_imu[0] = q_res.x() * q_res.x()
                 + q_res.y() * q_res.y()
                 + q_res.z() * q_res.z();
@@ -195,12 +196,14 @@ class Imu_Term {
             solved_acc = (ite_trans - (T)2 * _previous_rArm_position[1].cast<T>()  + _previous_rArm_position[0].cast<T>()) / (T)period;
             //cost_imu[6] = (solved_acc - _rArm_imu_acc.cast<T>()).norm() * (T)acc_weight;
             acc_diff = solved_acc - _rArm_imu_acc.cast<T>();
+            //右臂加速度
             cost_imu[6] = (acc_diff(0,0) * acc_diff(0,0) +
                           acc_diff(1,0) * acc_diff(1,0) +
                           acc_diff(2,0) * acc_diff(2,0)) * (T)acc_weight;
             //rArm_ori cost
             q_res = (ite_ori * _rArm_offset.cast<T>()).inverse() * _rArm_imu_ori.cast<T>();
             q_res.normalize();
+            // 左臂旋转
             cost_imu[1] = q_res.x() * q_res.x()
                 + q_res.y() * q_res.y()
                 + q_res.z() * q_res.z();
@@ -219,12 +222,14 @@ class Imu_Term {
             solved_acc = (ite_trans - (T)2 * _previous_rHand_position[1].cast<T>()  + _previous_rHand_position[0].cast<T>()) / (T)period;
             //cost_imu[7] = (solved_acc - _rHand_imu_acc.cast<T>()).norm() * (T)acc_weight;
             acc_diff = solved_acc - _rHand_imu_acc.cast<T>();
+            // 右手加速度
             cost_imu[7] = (acc_diff(0,0) * acc_diff(0,0) +
                           acc_diff(1,0) * acc_diff(1,0) +
                           acc_diff(2,0) * acc_diff(2,0)) * (T)acc_weight;
             //rHand_ori cost
             q_res = (ite_ori * _rHand_offset.cast<T>()).inverse() * _rHand_imu_ori.cast<T>();
             q_res.normalize();
+            // 右手旋转误差
             cost_imu[2] = q_res.x() * q_res.x()
                 + q_res.y() * q_res.y()
                 + q_res.z() * q_res.z();
@@ -256,12 +261,14 @@ class Imu_Term {
             solved_acc = (ite_trans - (T)2 * _previous_lArm_position[1].cast<T>()  + _previous_lArm_position[0].cast<T>()) / (T)period;
             //cost_imu[8] = (solved_acc - _lArm_imu_acc.cast<T>()).norm() * (T)acc_weight;
             acc_diff = solved_acc - _lArm_imu_acc.cast<T>();
+            // 左臂加速度
             cost_imu[8] = (acc_diff(0,0) * acc_diff(0,0) +
                           acc_diff(1,0) * acc_diff(1,0) +
                           acc_diff(2,0) * acc_diff(2,0)) * (T)acc_weight;
             //lArm_ori cost
             q_res = (ite_ori * _lArm_offset.cast<T>()).inverse() * _lArm_imu_ori.cast<T>();
             q_res.normalize();
+            // 左臂旋转误差
             cost_imu[3] = q_res.x() * q_res.x()
                   + q_res.y() * q_res.y()
                   + q_res.z() * q_res.z();
@@ -279,12 +286,14 @@ class Imu_Term {
             solved_acc = (ite_trans - (T)2 * _previous_lHand_position[1].cast<T>()  + _previous_lHand_position[0].cast<T>()) / (T)period;
             //cost_imu[9] = (solved_acc - _lHand_imu_acc.cast<T>()).norm() * (T)acc_weight;
             acc_diff = solved_acc - _lHand_imu_acc.cast<T>();
+            // 左手加速度误差
             cost_imu[9] = (acc_diff(0,0) * acc_diff(0,0) +
                           acc_diff(1,0) * acc_diff(1,0) +
                           acc_diff(2,0) * acc_diff(2,0)) * (T)acc_weight;
 
             q_res = (ite_ori * _lHand_offset.cast<T>()).inverse() * _lHand_imu_ori.cast<T>();
             q_res.normalize();
+            // 左手旋转误差
             cost_imu[4] = q_res.x() * q_res.x()
                   + q_res.y() * q_res.y()
                   + q_res.z() * q_res.z();
