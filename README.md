@@ -1,5 +1,8 @@
 # Single-human 6D pose estimation based on fusion of IMU and multi-view images
 
+# Background
+目前，人体姿态估计主要分为三种方法：1）运动捕捉设备；2）IMU测量；3）视觉。运动捕捉设备精度高、价格昂贵；IMU缺少绝对位置信息；视觉能够提供关节位置的绝对信息，但无法测量旋转信息。为此，我们结合IMU和视觉的优势，提出一种多传感器信息融合的人体姿态估计方法。
+
 # The context of our framework:
  ## 1. Human upper body model
  
