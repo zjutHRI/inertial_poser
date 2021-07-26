@@ -153,7 +153,7 @@ class Imu_Term {
             ite_ori = _world_to_ref.cast<T>() * ori;
             ite_trans += ite_ori * _bone_length[0].cast<T>();
             
-            // ite_ori表示在世界坐标系下的旋转信息
+            // ite_ori表示髋关节在世界坐标系下的旋转信息
             // _hip_offset 表示肢体连杆坐标系与IMU传感器坐标系固定的旋转偏移
             // ite_ori * _hip_offset.cast<T>() 表示旋转的推导值
             // _hip_imu_ori旋转测量值
